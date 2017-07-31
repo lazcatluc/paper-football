@@ -56,4 +56,24 @@ public class NextMovesTest {
         assertThat(expectedButNotPossible).isEmpty();
         
     }
+    
+    @Test
+    public void canRunOutOfMovesIfPathBlocked() throws Exception {
+        Point origin = new Point(-3, 0);
+        Set<SymmetricLine> alreadyPassed = new HashSet<>(Arrays.asList(
+                new SymmetricLine(origin, new Point(-2, -1)),
+                new SymmetricLine(origin, new Point(-2, 0)),
+                new SymmetricLine(origin, new Point(-2, 1)),
+                new SymmetricLine(origin, new Point(-3, 1)),
+                new SymmetricLine(origin, new Point(-3, -1)),
+                new SymmetricLine(origin, new Point(-4, 1)),
+                new SymmetricLine(origin, new Point(-4, -1)),
+                new SymmetricLine(new Point(-4, 0), new Point(-3, 1)),
+                new SymmetricLine(new Point(-4, 0), new Point(-3, -1))        
+                        ));
+        
+        assertThat(new NextMoves(new FootballField(8, 10), origin, 
+                alreadyPassed)
+                .getPossibleMoves()).isEmpty();
+    }
 }
