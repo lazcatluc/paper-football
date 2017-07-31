@@ -3,6 +3,7 @@ package ro.contezi.paperfootball;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class SymmetricLine {
     private final Set<Point> points;
@@ -14,8 +15,17 @@ public class SymmetricLine {
     }
 
     @Override
+    public String toString() {
+        return points.toString();
+    }
+
+    @Override
     public int hashCode() {
         return points.hashCode();
+    }
+    
+    public Stream<Point> points() {
+        return points.stream();
     }
 
     @Override

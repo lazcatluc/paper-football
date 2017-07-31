@@ -19,18 +19,28 @@ public class FootballFieldTest {
     }
     
     @Test
-    public void findsGoalNorthCenter() {
-        assertThat(field.isGoalNorth(new Point(0, 6))).isTrue();
-    }
-
-    @Test
-    public void findsGoalNorthLeft() {
-        assertThat(field.isGoalNorth(new Point(-1, 6))).isTrue();
+    public void findsNotEdgeOnTheNorthGoalLineNotOut() {
+        assertThat(field.isOut(new Point(0, 5))).isFalse();
     }
     
     @Test
-    public void findsGoalNorthRight() {
-        assertThat(field.isGoalNorth(new Point(1, 6))).isTrue();
+    public void findsGoalNorthCenter() {
+        assertThat(field.isGoalNorth(new Point(0, 6))).isTrue();
+    }
+    
+    @Test
+    public void goalNorthCenterIsNotOut() {
+        assertThat(field.isOut(new Point(0, 6))).isFalse();
+    }
+
+    @Test
+    public void findsOutNorthLeft() {
+        assertThat(field.isOut(new Point(-1, 6))).isTrue();
+    }
+    
+    @Test
+    public void findOutNorthRight() {
+        assertThat(field.isOut(new Point(1, 6))).isTrue();
     }
     
     @Test
@@ -47,20 +57,30 @@ public class FootballFieldTest {
     public void findsGoalSouthCenter() {
         assertThat(field.isGoalSouth(new Point(0, -6))).isTrue();
     }
+    
+    @Test
+    public void findsNotOutSouthCenter() {
+        assertThat(field.isOut(new Point(0, -6))).isFalse();
+    }
 
     @Test
-    public void findsGoalSouthLeft() {
-        assertThat(field.isGoalSouth(new Point(-1, -6))).isTrue();
+    public void findsOutSouthLeft() {
+        assertThat(field.isOut(new Point(-1, -6))).isTrue();
     }
     
     @Test
-    public void findsGoalSouthRight() {
-        assertThat(field.isGoalSouth(new Point(1, -6))).isTrue();
+    public void findsOutSouthRight() {
+        assertThat(field.isOut(new Point(1, -6))).isTrue();
     }
     
     @Test
     public void findsPointOnLeftEdge() throws Exception {
         assertThat(field.isEdge(new Point(-4, 1))).isTrue();
+    }
+    
+    @Test
+    public void findsOutBeyondLeftEdge() throws Exception {
+        assertThat(field.isOut(new Point(-5, 1))).isTrue();
     }
     
     @Test
@@ -71,6 +91,11 @@ public class FootballFieldTest {
     @Test
     public void findsPointOnRightEdge() throws Exception {
         assertThat(field.isEdge(new Point(4, 1))).isTrue();
+    }
+    
+    @Test
+    public void findsOutBeyondRightEdge() throws Exception {
+        assertThat(field.isOut(new Point(5, 1))).isTrue();
     }
     
     @Test

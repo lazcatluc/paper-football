@@ -4,15 +4,18 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class FootballField {
     private final Set<Point> goalNorth;
     private final Set<Point> goalSouth;
     private final Set<Point> edge;
+    private final int halfWidth;
+    private final int halfHeight;
 
     public FootballField(int width, int height) {
-        int halfWidth = width / 2;
-        int halfHeight = height / 2;
+        halfWidth = width / 2;
+        halfHeight = height / 2;
         int goalHeight = halfHeight + 1;
         goalNorth = IntStream.range(-1, 2).mapToObj(x -> new Point(x, goalHeight)).collect(Collectors.toSet());
         goalSouth = IntStream.range(-1, 2).mapToObj(x -> new Point(x, -goalHeight)).collect(Collectors.toSet());
@@ -35,5 +38,16 @@ public class FootballField {
 
     public boolean isEdge(Point point) {
         return edge.contains(point);
+    }
+    
+    public boolean isOut(Point point) {
+        if (point.getX().equals(0) && (isGoalNorth(point) || isGoalSouth(point))) {
+            return false;
+        }
+        return point.getX() < -halfWidth || point.getX() > halfWidth || point.getY() < -halfHeight || point.getY() > halfHeight;
+    }
+    
+    public Stream<Point> edge() {
+        return edge.stream();
     }
 }

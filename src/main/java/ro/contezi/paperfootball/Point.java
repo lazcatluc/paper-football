@@ -3,6 +3,7 @@ package ro.contezi.paperfootball;
 import java.util.Objects;
 
 public class Point {
+
     private final Integer x;
     private final Integer y;
     
@@ -37,5 +38,9 @@ public class Point {
     public Integer getY() {
         return y;
     }
-    
+
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
 }
