@@ -37,5 +37,10 @@ public class SymmetricLine {
         SymmetricLine other = (SymmetricLine) obj;
         return Objects.equals(points, other.points);
     }
+
+    public Point opposite(Point currentPoint) {
+        return points.stream().filter(point -> !currentPoint.equals(point))
+                .findFirst().orElseThrow(IllegalStateException::new);
+    }
     
 }
