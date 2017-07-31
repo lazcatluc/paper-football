@@ -29,5 +29,13 @@ public class Point {
         Point other = (Point) obj;
         return Objects.equals(x, other.x) && Objects.equals(y, other.y);
     }
+
+    public Integer getX() {
+        return x;
+    }
+
+    public Integer getY() {
+        return y;
+    }
     
 }
