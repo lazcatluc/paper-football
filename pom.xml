@@ -38,5 +38,10 @@
             <version>3.6.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ro.contezi</groupId>
+            <artifactId>alpha-beta</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 </project>

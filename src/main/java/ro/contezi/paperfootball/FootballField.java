@@ -34,6 +34,14 @@ public class FootballField {
         edge.remove(new Point(0, -halfHeight));
         edge.remove(new Point(0, halfHeight));
     }
+    
+    public Point getGoalNorth() {
+        return new Point(0, halfHeight + 1);
+    }
+    
+    public Point getGoalSouth() {
+        return new Point(0, -halfHeight - 1);
+    }
 
     public boolean isGoalNorth(Point point) {
         return goalNorth.contains(point);
