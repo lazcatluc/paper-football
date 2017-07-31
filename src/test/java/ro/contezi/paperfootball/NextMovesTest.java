@@ -14,7 +14,8 @@ public class NextMovesTest {
 
     @Test
     public void getsImmediateNeighborsAsPossibleMoves() {
-        assertThat(new NextMoves(new FootballField(8, 10), new Point(), Collections.emptySet()).getPossibleMoves().size()).isEqualTo(8);
+        assertThat(new NextMoves(new FootballField(8, 10), new Point(), Collections.emptySet()).getPossibleMoves().size())
+            .isEqualTo(8);
     }
 
     @Test

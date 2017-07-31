@@ -7,11 +7,18 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class FootballField {
+    private static final int DEFAULT_HEIGHT = 10;
+    private static final int DEFAULT_WIDTH = 8;
+    
     private final Set<Point> goalNorth;
     private final Set<Point> goalSouth;
     private final Set<Point> edge;
     private final int halfWidth;
     private final int halfHeight;
+    
+    public FootballField() {
+        this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    }
 
     public FootballField(int width, int height) {
         halfWidth = width / 2;

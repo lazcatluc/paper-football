@@ -13,6 +13,10 @@ public class NextMoves {
     private final Set<SymmetricLine> alreadyPassed;
     private final Set<Point> pointsPassed;
     
+    public NextMoves() {
+        this(new FootballField(), new Point(), Collections.emptySet());
+    }
+    
     public NextMoves(FootballField footballField, Point currentPosition, Set<SymmetricLine> alreadyPassed) {
         this.footballField = footballField;
         this.currentPosition = currentPosition;
@@ -36,8 +40,8 @@ public class NextMoves {
         return neighbors;
     }
     
-    private Set<List<SymmetricLine>> fullPaths(Point origin, List<SymmetricLine> currentPath) {
-        if (!pointsPassed.contains(origin)) {
+    private Set<List<SymmetricLine>> fullPaths(Point origin, List<SymmetricLine> currentPath, boolean stopIfNotPassed) {
+        if (stopIfNotPassed && !pointsPassed.contains(origin)) {
             return Collections.singleton(currentPath);
         }
         Set<List<SymmetricLine>> ret = new HashSet<>();
@@ -48,12 +52,16 @@ public class NextMoves {
             }
             List<SymmetricLine> newPath = new ArrayList<>(currentPath);
             newPath.add(symmetricLine);
-            ret.addAll(fullPaths(neighbor, newPath));
+            ret.addAll(fullPaths(neighbor, newPath, true));
         }
         return ret;
     }
     
+    public Set<List<SymmetricLine>> getPossibleMoves(Point position) {
+        return fullPaths(position, Collections.emptyList(), false);
+    }
+    
     public Set<List<SymmetricLine>> getPossibleMoves() {
-        return fullPaths(currentPosition, Collections.emptyList());
+        return getPossibleMoves(currentPosition);
     }
 }
