@@ -48,6 +48,13 @@ public class PlayTest {
                 new SymmetricLine(new Point(-3, 2), new Point(-4, 1))), node());
     }
     
+    @Test(expected = PointOutException.class)
+    public void doesNotValidateMoveToBounceOnTheEdgeIfOut() {
+        currentPosition = new Point(-3, 0);
+        Play.validate(Arrays.asList(new SymmetricLine(currentPosition, new Point(-4, 1)), 
+                new SymmetricLine(new Point(-5, 1), new Point(-4, 1))), node());
+    }
+    
     @Test(expected = LineAlreadyDrawnException.class)
     public void cannotWalkOnVerticalEdge() {
         currentPosition = new Point(-3, 0);

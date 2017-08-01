@@ -2,6 +2,7 @@ package ro.contezi.paperfootball.play;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,8 +34,11 @@ public class Play {
     }
     
     private static void validateNoPointsOut(List<SymmetricLine> moves, FootballNode original) throws PointOutException {
-        // TODO Auto-generated method stub
-        
+        Optional<Point> pointOut = moves.stream().flatMap(SymmetricLine::points)
+            .filter(original.getFootballField()::isOut).findAny();
+        if (pointOut.isPresent()) {
+            throw new PointOutException(pointOut.get());
+        }
     }
 
     private static void validateAllIntermediaryPointsAreAlreadyPassed(List<SymmetricLine> moves,
