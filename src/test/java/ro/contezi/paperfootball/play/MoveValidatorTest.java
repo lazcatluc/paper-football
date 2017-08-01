@@ -1,6 +1,7 @@
 package ro.contezi.paperfootball.play;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +33,11 @@ public class MoveValidatorTest {
     @Test
     public void validatesMoveToNextNeighbor() {
         new MoveValidator(Arrays.asList(new SymmetricLine(currentPosition, new Point(1, 0))), node()).validate();
+    }
+    
+    @Test(expected = IllegalMoveException.class)
+    public void disallowsPass() {
+        new MoveValidator(Collections.emptyList(), node()).validate();
     }
 
     @Test(expected = LineAlreadyDrawnException.class)

@@ -1,4 +1,4 @@
-package ro.contezi.paperfootball.play;
+package ro.contezi.paperfootball.input;
 
 import java.util.ArrayList;
 import java.util.HashMap;

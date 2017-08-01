@@ -22,8 +22,13 @@ public class FootballNode implements ABNode {
     private final Comparator<FootballNode> stateSorter;
 
     public FootballNode() {
-        this(new FootballField(), Collections.emptySet(), new Point(), 
+        this(new FootballField());
+    }
+    
+    public FootballNode(FootballField footballField) {
+        this(footballField, Collections.emptySet(), new Point(), 
                 (fn1, fn2) -> Double.compare(fn2.heuristicValue(), fn1.heuristicValue()));
+
     }
     
     public FootballNode(FootballNode original, List<SymmetricLine> newPath) {

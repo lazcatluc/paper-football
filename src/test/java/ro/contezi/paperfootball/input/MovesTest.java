@@ -1,4 +1,4 @@
-package ro.contezi.paperfootball.play;
+package ro.contezi.paperfootball.input;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import ro.contezi.paperfootball.Point;
 import ro.contezi.paperfootball.SymmetricLine;
+import ro.contezi.paperfootball.input.Moves;
 
 public class MovesTest {
 
