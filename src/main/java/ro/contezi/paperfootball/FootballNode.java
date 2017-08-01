@@ -17,6 +17,7 @@ public class FootballNode implements ABNode {
     private final Set<SymmetricLine> lines;
     private final Point currentPosition;
     private final Set<List<SymmetricLine>> nextMoves;
+    private final NextMoves nextMovesGenerator;
     private final double heuristic;
     private final Comparator<FootballNode> stateSorter;
 
@@ -29,9 +30,10 @@ public class FootballNode implements ABNode {
         footballField = original.footballField;
         lines = new HashSet<>(original.lines);
         lines.addAll(newPath);
-        currentPosition = findEndPoint(original.currentPosition, newPath);
+        currentPosition = SymmetricLine.findEndPoint(original.currentPosition, newPath);
         stateSorter = original.stateSorter.reversed();
-        this.nextMoves = new NextMoves(footballField, currentPosition, lines).getPossibleMoves();
+        nextMovesGenerator = new NextMoves(footballField, currentPosition, lines);
+        this.nextMoves = nextMovesGenerator.getPossibleMoves();
         this.heuristic = computeHeuristic();
     }
     
@@ -41,7 +43,8 @@ public class FootballNode implements ABNode {
         this.lines = lines;
         this.currentPosition = currentPosition;
         this.stateSorter = stateSorter;
-        this.nextMoves = new NextMoves(footballField, currentPosition, lines).getPossibleMoves();
+        nextMovesGenerator = new NextMoves(footballField, currentPosition, lines);
+        this.nextMoves = nextMovesGenerator.getPossibleMoves();
         this.heuristic = computeHeuristic();
     }
 
@@ -80,14 +83,6 @@ public class FootballNode implements ABNode {
         return children;
     }
 
-    private static Point findEndPoint(Point startPoint, List<SymmetricLine> lines) {
-        Point currentPoint = startPoint;
-        for (SymmetricLine line : lines) {
-            currentPoint = line.opposite(currentPoint);
-        }
-        return currentPoint;
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(currentPosition, footballField, lines);
@@ -108,7 +103,13 @@ public class FootballNode implements ABNode {
     public Point getCurrentPosition() {
         return currentPosition;
     }
+
+    public Set<SymmetricLine> getLines() {
+        return Collections.unmodifiableSet(lines);
+    }
     
-    
+    public Set<Point> alreadyPassedPoints() {
+        return nextMovesGenerator.getPointsPassed();
+    }
 }
 

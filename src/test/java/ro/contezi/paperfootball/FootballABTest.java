@@ -16,7 +16,7 @@ public class FootballABTest {
     public void partiallySolvesFootballWithCache() throws Exception {
         
         TranspositionAwareNode node = new TranspositionAwareNode(new FootballNode());
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 5; i++) {
             LOGGER.info("Found value at depth " + i + ": " +
                 new MaximizingTranspositionAlphaBeta(node, i, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY).getValue());
             LOGGER.info("Cache size: " + node.getCacheSize());
@@ -26,7 +26,7 @@ public class FootballABTest {
     @Test
     public void partiallySolvesFootball() throws Exception {
         FootballNode node = new FootballNode();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 5; i++) {
             LOGGER.info("Found value at depth " + i + ": " +
                 new MaximizingAlphaBeta(node, i, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY).getValue());
         }

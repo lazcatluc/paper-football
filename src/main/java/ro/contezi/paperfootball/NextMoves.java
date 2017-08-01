@@ -64,4 +64,9 @@ public class NextMoves {
     public Set<List<SymmetricLine>> getPossibleMoves() {
         return getPossibleMoves(currentPosition);
     }
+
+    public Set<Point> getPointsPassed() {
+        return Collections.unmodifiableSet(pointsPassed);
+    }
+    
 }
