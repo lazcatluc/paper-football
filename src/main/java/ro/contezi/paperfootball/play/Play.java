@@ -47,8 +47,11 @@ public class Play {
     }
 
     private static void validateNoLinesAreCrossed(List<SymmetricLine> moves, FootballNode original) throws LineAlreadyDrawnException {
-        // TODO Auto-generated method stub
-        
+        for (SymmetricLine line : moves) {
+            if (line.points().allMatch(original.getFootballField()::isEdge)) {
+                throw new LineAlreadyDrawnException(line);
+            }
+        }
     }
 
     private static List<SymmetricLine> parseMoves(String userInput, Point currentPosition) {

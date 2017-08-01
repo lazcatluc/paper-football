@@ -1,8 +1,5 @@
 package ro.contezi.paperfootball.play;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +32,21 @@ public class PlayTest {
     @Test
     public void validatesMoveToNextNeighbor() {
         Play.validate(Arrays.asList(new SymmetricLine(currentPosition, new Point(1, 0))), node());
+    }
+    
+    @Test
+    public void validatesMoveToNextNeighborWithBounceOnTheEdge() {
+        currentPosition = new Point(-3, 0);
+        Play.validate(Arrays.asList(new SymmetricLine(currentPosition, new Point(-4, 1)), 
+                new SymmetricLine(new Point(-3, 2), new Point(-4, 1))), node());
+    }
+    
+    @Test(expected = LineAlreadyDrawnException.class)
+    public void cannotWalkOnEdge() {
+        currentPosition = new Point(-3, 0);
+        Play.validate(Arrays.asList(new SymmetricLine(currentPosition, new Point(-4, 1)), 
+                new SymmetricLine(new Point(-4, 2), new Point(-4, 1)),
+                new SymmetricLine(new Point(-4, 2), new Point(-3, 2))), node());
     }
 
     @Test(expected = IllegalContinuationFromPointException.class)

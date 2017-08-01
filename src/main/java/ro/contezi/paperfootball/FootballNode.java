@@ -111,5 +111,9 @@ public class FootballNode implements ABNode {
     public Set<Point> alreadyPassedPoints() {
         return nextMovesGenerator.getPointsPassed();
     }
+
+    public FootballField getFootballField() {
+        return footballField;
+    }
 }
 
