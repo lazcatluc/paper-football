@@ -34,6 +34,13 @@ public class PlayTest {
         Play.validate(Arrays.asList(new SymmetricLine(currentPosition, new Point(1, 0))), node());
     }
     
+    @Test(expected = LineAlreadyDrawnException.class)
+    public void doesNotValidateMoveToNextNeighborWhenLineAlreadyDrawn() {
+        SymmetricLine lineToNeighbor = new SymmetricLine(currentPosition, new Point(1, 0));
+        parsedLines.add(lineToNeighbor);
+        Play.validate(Arrays.asList(lineToNeighbor), node());
+    }
+    
     @Test
     public void validatesMoveToNextNeighborWithBounceOnTheEdge() {
         currentPosition = new Point(-3, 0);

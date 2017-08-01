@@ -55,9 +55,10 @@ public class Play {
                      line.points().map(Point::getY).collect(Collectors.toSet()).size() == 1)) {
                 throw new LineAlreadyDrawnException(line);
             }
-            if (!currentLines.add(line)) {
+            if (!currentLines.add(line) || original.getLines().contains(line)) {
                 throw new LineAlreadyDrawnException(line);
             }
+            
         }
     }
 
