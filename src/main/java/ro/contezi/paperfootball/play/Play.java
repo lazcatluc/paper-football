@@ -11,7 +11,8 @@ public class Play {
     }
     
     static FootballNode play(String userInput, FootballNode original) {
-        List<SymmetricLine> moves = Moves.fromString(userInput, original.getCurrentPosition());
+        List<SymmetricLine> moves = new Moves(original.getCurrentPosition())
+                .fromString(userInput);
         new MoveValidator(moves, original).validate();
         return new FootballNode(original, moves);
     }
