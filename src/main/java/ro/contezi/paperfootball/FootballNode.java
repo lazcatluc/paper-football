@@ -20,6 +20,7 @@ public class FootballNode implements ABNode {
     private final NextMoves nextMovesGenerator;
     private final double heuristic;
     private final Comparator<FootballNode> stateSorter;
+    private final List<SymmetricLine> pathLeadingToThisNode;
 
     public FootballNode() {
         this(new FootballField());
@@ -40,6 +41,7 @@ public class FootballNode implements ABNode {
         nextMovesGenerator = new NextMoves(footballField, currentPosition, lines);
         this.nextMoves = nextMovesGenerator.getPossibleMoves();
         this.heuristic = computeHeuristic();
+        this.pathLeadingToThisNode = newPath;
     }
     
     public FootballNode(FootballField footballField, Set<SymmetricLine> lines, Point currentPosition, 
@@ -51,6 +53,7 @@ public class FootballNode implements ABNode {
         nextMovesGenerator = new NextMoves(footballField, currentPosition, lines);
         this.nextMoves = nextMovesGenerator.getPossibleMoves();
         this.heuristic = computeHeuristic();
+        this.pathLeadingToThisNode = Collections.emptyList();
     }
 
     private double computeHeuristic() {
@@ -119,6 +122,10 @@ public class FootballNode implements ABNode {
 
     public FootballField getFootballField() {
         return footballField;
+    }
+
+    public List<SymmetricLine> getPathLeadingToThisNode() {
+        return Collections.unmodifiableList(pathLeadingToThisNode);
     }
 }
 

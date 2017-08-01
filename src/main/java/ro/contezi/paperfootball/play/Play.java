@@ -23,10 +23,10 @@ public class Play {
         FootballNode node = new FootballNode(footballField);
         UserInputProvider[] providers = new UserInputProvider[] {north, south};
         int providerIndex = 0;
-        
+        String previousInput = "";
         while (!node.isTerminal()) {
             UserInputProvider provider = providers[providerIndex];
-            String input = provider.getInput(node);
+            String input = provider.getInput(previousInput, node);
             List<SymmetricLine> moves = new Moves(node.getCurrentPosition())
                     .fromString(input);
             try {
@@ -37,6 +37,7 @@ public class Play {
                 continue;
             }
             providerIndex = 1 - providerIndex;
+            previousInput = input;
             node = new FootballNode(node, moves);
         }
         return node;

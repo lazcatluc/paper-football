@@ -29,7 +29,7 @@ public class PlayTest {
         UserInputProvider south = new UserInputProvider() {
             private boolean b;
             @Override
-            public String getInput(FootballNode node) {
+            public String getInput(String previousInput, FootballNode node) {
                 b = !b;
                 return b?"0":"4";
             }
@@ -47,7 +47,7 @@ public class PlayTest {
     public UserInputProvider goSouth() {
         UserInputProvider input = new UserInputProvider() {
             @Override
-            public String getInput(FootballNode node) {
+            public String getInput(String previousInput, FootballNode node) {
                 return "4";
             }
 
