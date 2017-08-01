@@ -39,7 +39,7 @@ public class SymmetricLine {
         return Objects.equals(points, other.points);
     }
 
-    private Point opposite(Point currentPoint) {
+    public Point opposite(Point currentPoint) {
         return points.stream().filter(point -> !currentPoint.equals(point)).findFirst()
                 .orElseThrow(IllegalStateException::new);
     }

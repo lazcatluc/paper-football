@@ -30,4 +30,24 @@ public class MovesTest {
                 new SymmetricLine(new Point(1, 0), new Point(0, 0))
             ));
     }
+    
+    @Test
+    public void findsRomboidalPathFromList() {
+        assertThat(new Moves().fromList(Arrays.asList(
+                new SymmetricLine(new Point(0, 0), new Point(1, 1)),
+                new SymmetricLine(new Point(1, 1), new Point(2, 0)),
+                new SymmetricLine(new Point(2, 0), new Point(1, -1)),
+                new SymmetricLine(new Point(1, -1), new Point(0, 0))
+            ))).isEqualTo("1357");
+    }
+
+    @Test
+    public void findsSquarePathFromList() {
+        assertThat(new Moves().fromList(Arrays.asList(
+                new SymmetricLine(new Point(0, 0), new Point(0, 1)),
+                new SymmetricLine(new Point(0, 1), new Point(1, 1)),
+                new SymmetricLine(new Point(1, 1), new Point(1, 0)),
+                new SymmetricLine(new Point(1, 0), new Point(0, 0))
+            ))).isEqualTo("0246");
+    }
 }

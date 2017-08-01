@@ -13,6 +13,7 @@ public class Moves {
     
     private final Point currentPosition;
     private static final Map<Character, Point> CLOCKWISE_CHARS = new HashMap<>();
+    private static final Map<Point, Character> REVERSE_CLOCKWISE_CHARS = new HashMap<>();
     static {
         CLOCKWISE_CHARS.put('0', new Point(0, 1));
         CLOCKWISE_CHARS.put('1', new Point(1, 1));
@@ -22,6 +23,7 @@ public class Moves {
         CLOCKWISE_CHARS.put('5', new Point(-1, -1));
         CLOCKWISE_CHARS.put('6', new Point(-1, 0));
         CLOCKWISE_CHARS.put('7', new Point(-1, 1));
+        CLOCKWISE_CHARS.forEach((ch, point) -> REVERSE_CLOCKWISE_CHARS.put(point, ch));
     }
     
     public Moves(){ 
@@ -46,11 +48,26 @@ public class Moves {
         return ret;
     }
 
-    public static String fromList(List<SymmetricLine> userInput) {
-        return null;
+    public String fromList(List<SymmetricLine> userInput) {
+        char[] chars = new char[userInput.size()];
+        Point currentPoint = currentPosition;
+        int i = 0;
+        for (SymmetricLine line : userInput) {
+            Point newPoint = line.opposite(currentPoint);
+            Point subtracted = subtract(newPoint, currentPoint);
+            chars[i++] = Optional.ofNullable(REVERSE_CLOCKWISE_CHARS.get(subtracted))
+                    .orElseThrow(() -> new IllegalArgumentException("Unexpected subtracted: "
+                            + subtracted));
+            currentPoint = newPoint;
+        }
+        return new String(chars);
     }
     
     private static Point add(Point from, Point pointToAdd) {
         return new Point(from.getX() + pointToAdd.getX(), from.getY() + pointToAdd.getY());
+    }
+    
+    private static Point subtract(Point from, Point pointToSubtract) {
+        return new Point(from.getX() - pointToSubtract.getX(), from.getY() - pointToSubtract.getY());
     }
 }
