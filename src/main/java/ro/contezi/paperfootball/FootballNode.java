@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,16 @@ public class FootballNode implements ABNode {
     public FootballNode() {
         this(new FootballField(), Collections.emptySet(), new Point(), 
                 (fn1, fn2) -> Double.compare(fn2.heuristicValue(), fn1.heuristicValue()));
+    }
+    
+    public FootballNode(FootballNode original, List<SymmetricLine> newPath) {
+        footballField = original.footballField;
+        lines = new HashSet<>(original.lines);
+        lines.addAll(newPath);
+        currentPosition = findEndPoint(original.currentPosition, newPath);
+        stateSorter = original.stateSorter.reversed();
+        this.nextMoves = new NextMoves(footballField, currentPosition, lines).getPossibleMoves();
+        this.heuristic = computeHeuristic();
     }
     
     public FootballNode(FootballField footballField, Set<SymmetricLine> lines, Point currentPosition, 
@@ -63,21 +74,41 @@ public class FootballNode implements ABNode {
     @Override
     public Collection<? extends ABNode> children() {
         List<FootballNode> children = nextMoves.stream().map(addedLines -> {
-            Set<SymmetricLine> newLines = new HashSet<>(lines);
-            newLines.addAll(addedLines);
-            Point newStartPoint = findEndPoint(currentPosition, addedLines);
-            return new FootballNode(footballField, newLines, newStartPoint, stateSorter.reversed());
+            return new FootballNode(this, addedLines);
         }).collect(Collectors.toList());
         Collections.sort(children, stateSorter);
         return children;
     }
 
-    private Point findEndPoint(Point startPoint, List<SymmetricLine> lines) {
+    private static Point findEndPoint(Point startPoint, List<SymmetricLine> lines) {
         Point currentPoint = startPoint;
         for (SymmetricLine line : lines) {
             currentPoint = line.opposite(currentPoint);
         }
         return currentPoint;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentPosition, footballField, lines);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        FootballNode other = (FootballNode) obj;
+        return Objects.equals(currentPosition, other.currentPosition) &&
+               Objects.equals(lines, other.lines) &&
+               Objects.equals(footballField, other.footballField);
+    }
+
+    public Point getCurrentPosition() {
+        return currentPosition;
+    }
+    
+    
 }
 

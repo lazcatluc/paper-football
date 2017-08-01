@@ -1,6 +1,7 @@
 package ro.contezi.paperfootball;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -65,4 +66,25 @@ public class FootballField {
     public Stream<Point> edge() {
         return edge.stream();
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(halfHeight, halfWidth);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        FootballField other = (FootballField) obj;
+        if (halfHeight != other.halfHeight)
+            return false;
+        if (halfWidth != other.halfWidth)
+            return false;
+        return true;
+    }
+    
+    
 }
