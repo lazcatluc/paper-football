@@ -1,5 +1,6 @@
 package ro.contezi.paperfootball.play;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,8 +48,14 @@ public class Play {
     }
 
     private static void validateNoLinesAreCrossed(List<SymmetricLine> moves, FootballNode original) throws LineAlreadyDrawnException {
+        Set<SymmetricLine> currentLines = new HashSet<>();
         for (SymmetricLine line : moves) {
-            if (line.points().allMatch(original.getFootballField()::isEdge)) {
+            if (line.points().allMatch(original.getFootballField()::isEdge) &&
+                    (line.points().map(Point::getX).collect(Collectors.toSet()).size() == 1 ||
+                     line.points().map(Point::getY).collect(Collectors.toSet()).size() == 1)) {
+                throw new LineAlreadyDrawnException(line);
+            }
+            if (!currentLines.add(line)) {
                 throw new LineAlreadyDrawnException(line);
             }
         }
