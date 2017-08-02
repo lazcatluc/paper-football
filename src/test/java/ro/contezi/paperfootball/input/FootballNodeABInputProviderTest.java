@@ -6,11 +6,11 @@ import org.junit.Test;
 
 import ro.contezi.paperfootball.FootballNode;
 
-public class FootballNodeInputProviderTest {
+public class FootballNodeABInputProviderTest {
 
     @Test
     public void solvesForDepth4() {
-        FootballNodeInputProvider inputProvider = new FootballNodeInputProvider(4);
+        FootballNodeABInputProvider inputProvider = new FootballNodeABInputProvider(4);
         
         assertThat(inputProvider.getInput("", new FootballNode()))
             .isIn("3", "4", "5");

@@ -127,5 +127,11 @@ public class FootballNode implements ABNode {
     public List<SymmetricLine> getPathLeadingToThisNode() {
         return Collections.unmodifiableList(pathLeadingToThisNode);
     }
+
+    @Override
+    public String toString() {
+        return "FootballNode [lines=" + lines + ", currentPosition=" + currentPosition + ", pathLeadingToThisNode="
+                + pathLeadingToThisNode + "]";
+    }
 }
 

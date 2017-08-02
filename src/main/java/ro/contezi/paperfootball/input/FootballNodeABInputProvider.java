@@ -10,12 +10,12 @@ import ro.contezi.paperfootball.FootballNode;
 import ro.contezi.paperfootball.SymmetricLine;
 import ro.contezi.paperfootball.play.IllegalMoveException;
 
-public class FootballNodeInputProvider implements UserInputProvider {
+public class FootballNodeABInputProvider implements UserInputProvider {
 
-    private static final Logger LOGGER = LogManager.getLogger(FootballNodeInputProvider.class);
+    private static final Logger LOGGER = LogManager.getLogger(FootballNodeABInputProvider.class);
     private final int maxDepth;
 
-    public FootballNodeInputProvider(int maxDepth) {
+    public FootballNodeABInputProvider(int maxDepth) {
         this.maxDepth = maxDepth;
     }
 
@@ -28,7 +28,9 @@ public class FootballNodeInputProvider implements UserInputProvider {
         LOGGER.debug("Found value: " + value);
         FootballNode bestChild = (FootballNode) maximizingAlphaBeta.getChild();
         List<SymmetricLine> pathToBestChild = bestChild.getPathLeadingToThisNode();
-        return new Moves(node.getCurrentPosition()).fromList(pathToBestChild);
+        String move = new Moves(node.getCurrentPosition()).fromList(pathToBestChild);
+        LOGGER.debug("Found move: " + move);
+        return move;
     }
 
     @Override
