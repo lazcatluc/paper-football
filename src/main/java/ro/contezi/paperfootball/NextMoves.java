@@ -1,6 +1,7 @@
 package ro.contezi.paperfootball;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public class NextMoves {
+
     private final FootballField footballField;
     private final Point currentPosition;
     private final Set<SymmetricLine> alreadyPassed;
@@ -40,9 +42,9 @@ public class NextMoves {
         return neighbors;
     }
     
-    private Set<List<SymmetricLine>> fullPaths(Point origin, List<SymmetricLine> currentPath, boolean stopIfNotPassed) {
+    private Set<List<SymmetricLine>> fullPaths(Point origin, Collection<SymmetricLine> currentPath, boolean stopIfNotPassed) {
         if (stopIfNotPassed && !pointsPassed.contains(origin)) {
-            return Collections.singleton(currentPath);
+            return Collections.singleton(new ArrayList<>(currentPath));
         }
         Set<List<SymmetricLine>> ret = new HashSet<>();
         for (Point neighbor : immediateNeighbors(origin)) {
@@ -58,7 +60,11 @@ public class NextMoves {
     }
     
     public Set<List<SymmetricLine>> getPossibleMoves(Point position) {
-        return fullPaths(position, Collections.emptyList(), false);
+        return getPossibleMoves(position, Collections.emptyList());
+    }
+    
+    public Set<List<SymmetricLine>> getPossibleMoves(Point position, Collection<SymmetricLine> currentPath) {
+        return fullPaths(position, currentPath, false);
     }
     
     public Set<List<SymmetricLine>> getPossibleMoves() {

@@ -15,7 +15,7 @@ public class MatchTest {
     @Test
     public void makesMatch() {
         FootballNodeABInputProvider north = new FootballNodeABInputProvider(2);
-        FootballNodeExpandBestInputProvider south = new FootballNodeExpandBestInputProvider(10, 
+        FootballNodeExpandBestInputProvider south = new FootballNodeExpandBestInputProvider(5, 
                 (eb1, eb2) -> Double.compare(eb1.getValue(), eb2.getValue()));
         
         FootballNode playToTheEnd = new Play(new FootballField(), north, south).playToTheEnd();

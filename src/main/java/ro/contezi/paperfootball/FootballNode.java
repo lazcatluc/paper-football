@@ -9,10 +9,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ro.contezi.ab.ABNode;
 
 public class FootballNode implements ABNode {
     
+    private static final Logger LOGGER = LogManager.getLogger(FootballNode.class);
+
     private final FootballField footballField;
     private final Set<SymmetricLine> lines;
     private final Point currentPosition;
@@ -38,9 +43,12 @@ public class FootballNode implements ABNode {
         lines.addAll(newPath);
         currentPosition = SymmetricLine.findEndPoint(original.currentPosition, newPath);
         stateSorter = original.stateSorter.reversed();
+        LOGGER.debug("Getting next moves for " + currentPosition);
         nextMovesGenerator = new NextMoves(footballField, currentPosition, lines);
         this.nextMoves = nextMovesGenerator.getPossibleMoves();
+        LOGGER.debug("Found next moves: "+this.nextMoves.size());
         this.heuristic = computeHeuristic();
+        LOGGER.debug("Found heuristic: "+this.heuristic);
         this.pathLeadingToThisNode = newPath;
     }
     
@@ -66,10 +74,9 @@ public class FootballNode implements ABNode {
         if (nextMoves.isEmpty()) {
             return 0;
         }
-        FastestRoute fastestRoute = new FastestRoute(footballField, currentPosition, lines);
-        Integer distanceToSouth = fastestRoute.getFastestRoute(footballField.getGoalSouth()).orElse(Integer.MAX_VALUE);
-        Integer distanceToNorth = fastestRoute.getFastestRoute(footballField.getGoalNorth()).orElse(Integer.MAX_VALUE);
-        return distanceToNorth - distanceToSouth;
+
+        return -currentPosition.getY() + Math.signum(currentPosition.getY()) * 
+                Math.abs(currentPosition.getX()) / 10.0;
     }
     
     @Override
