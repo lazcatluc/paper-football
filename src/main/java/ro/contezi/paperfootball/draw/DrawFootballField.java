@@ -14,7 +14,9 @@ public class DrawFootballField {
     public void draw() {
         field.edge().forEach(edgePoint -> 
             edgePoint.getNeighbors().stream()
-                .filter(neighbor -> neighbor.getY() == edgePoint.getY())
+                .filter(field::isEdge)
+                .filter(neighbor -> neighbor.getY().equals(edgePoint.getY()) ||
+                        neighbor.getX().equals(edgePoint.getX()))
                 .forEach(neighbor -> canvas.drawLine(edgePoint, neighbor)));
     }
 }
