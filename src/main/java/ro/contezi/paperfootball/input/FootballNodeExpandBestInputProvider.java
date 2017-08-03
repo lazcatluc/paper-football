@@ -31,7 +31,7 @@ public class FootballNodeExpandBestInputProvider implements UserInputProvider {
     @Override
     public String getInput(String previousInput, FootballNode node) {
         LOGGER.debug("Expanding " + maxExpansions + " times.");
-        ExpandBest expandBest = new ExpandBest(node, bestChildFinder);
+        ExpandBest expandBest = new ExpandBest(node, bestChildFinder, 4);
         IntStream.range(0, maxExpansions).forEach(i -> expandBest.expand());
         double value = expandBest.getValue();
         LOGGER.debug("Found value: " + value);

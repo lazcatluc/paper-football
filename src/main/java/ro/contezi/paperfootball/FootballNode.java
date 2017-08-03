@@ -18,6 +18,8 @@ public class FootballNode implements ABNode {
     
     private static final Logger LOGGER = LogManager.getLogger(FootballNode.class);
 
+    public static final Comparator<FootballNode> NORTH_COMPARATOR = (fn1, fn2) -> Double.compare(fn2.heuristicValue(), fn1.heuristicValue());
+    
     private final FootballField footballField;
     private final Set<SymmetricLine> lines;
     private final Point currentPosition;
@@ -33,7 +35,7 @@ public class FootballNode implements ABNode {
     
     public FootballNode(FootballField footballField) {
         this(footballField, Collections.emptySet(), new Point(), 
-                (fn1, fn2) -> Double.compare(fn2.heuristicValue(), fn1.heuristicValue()));
+                NORTH_COMPARATOR);
 
     }
     
@@ -43,12 +45,12 @@ public class FootballNode implements ABNode {
         lines.addAll(newPath);
         currentPosition = SymmetricLine.findEndPoint(original.currentPosition, newPath);
         stateSorter = original.stateSorter.reversed();
-        LOGGER.debug("Getting next moves for " + currentPosition);
+        LOGGER.trace("Getting next moves for " + currentPosition);
         nextMovesGenerator = new NextMoves(footballField, currentPosition, lines);
         this.nextMoves = nextMovesGenerator.getPossibleMoves();
-        LOGGER.debug("Found next moves: "+this.nextMoves.size());
+        LOGGER.trace("Found next moves: "+this.nextMoves.size());
         this.heuristic = computeHeuristic();
-        LOGGER.debug("Found heuristic: "+this.heuristic);
+        LOGGER.trace("Found heuristic: "+this.heuristic);
         this.pathLeadingToThisNode = newPath;
     }
     

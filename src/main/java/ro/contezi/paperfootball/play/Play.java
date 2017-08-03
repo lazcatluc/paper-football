@@ -9,18 +9,24 @@ import ro.contezi.paperfootball.input.Moves;
 import ro.contezi.paperfootball.input.UserInputProvider;
 
 public class Play {
-    private final FootballField footballField;
     private final UserInputProvider north;
     private final UserInputProvider south;
+    private final FootballNode initialNode;
     
     public Play(FootballField footballField, UserInputProvider north, UserInputProvider south) {
-        this.footballField = footballField;
         this.north = north;
         this.south = south;
+        this.initialNode = new FootballNode(footballField);
+    }
+    
+    public Play(FootballNode footballNode, UserInputProvider north, UserInputProvider south) {
+        this.north = north;
+        this.south = south;
+        this.initialNode = footballNode;
     }
 
     public FootballNode playToTheEnd() {
-        FootballNode node = new FootballNode(footballField);
+        FootballNode node = initialNode;
         UserInputProvider[] providers = new UserInputProvider[] {north, south};
         int providerIndex = 0;
         String previousInput = "";
