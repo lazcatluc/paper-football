@@ -13,13 +13,7 @@ public class DrawFootballField {
     }
 
     public void drawGoalNorth() {
-        Point goalNorth = field.getGoalNorth();
-        Point left = new Point(goalNorth.getX() - 1, goalNorth.getY());
-        Point right = new Point(goalNorth.getX() + 1, goalNorth.getY());
-        canvas.drawLine(left, goalNorth);
-        canvas.drawLine(right, goalNorth);
-        canvas.drawLine(new Point(left.getX(), left.getY() - 1), left);
-        canvas.drawLine(new Point(right.getX(), right.getY() - 1), right);
+        drawGoal(field.getGoalNorth(), -1);
     }
     
     public void drawEdges() {
@@ -32,12 +26,15 @@ public class DrawFootballField {
     }
 
     public void drawGoalSouth() {
-        Point goalSouth = field.getGoalSouth();
-        Point left = new Point(goalSouth.getX() - 1, goalSouth.getY());
-        Point right = new Point(goalSouth.getX() + 1, goalSouth.getY());
-        canvas.drawLine(left, goalSouth);
-        canvas.drawLine(right, goalSouth);
-        canvas.drawLine(new Point(left.getX(), left.getY() + 1), left);
-        canvas.drawLine(new Point(right.getX(), right.getY() + 1), right);
+        drawGoal(field.getGoalSouth(), 1);
+    }
+
+    private void drawGoal(Point goal, int deltaY) {
+        Point left = new Point(goal.getX() - 1, goal.getY());
+        Point right = new Point(goal.getX() + 1, goal.getY());
+        canvas.drawLine(left, goal);
+        canvas.drawLine(right, goal);
+        canvas.drawLine(new Point(left.getX(), left.getY() + deltaY), left);
+        canvas.drawLine(new Point(right.getX(), right.getY() + deltaY), right);
     }
 }
