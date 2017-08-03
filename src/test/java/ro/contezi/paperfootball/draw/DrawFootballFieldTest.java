@@ -6,7 +6,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +40,7 @@ public class DrawFootballFieldTest {
     public void drawsHorizontalEdge() {
         initEdges(new Point(0, 0), new Point(1, 0));
         
-        drawFootballField.draw();
+        drawFootballField.drawEdges();
         
         verify(canvas).drawLine(new Point(0, 0), new Point(1, 0));
     }
@@ -50,7 +49,7 @@ public class DrawFootballFieldTest {
     public void drawsVerticalEdge() {
         initEdges(new Point(0, 0), new Point(0, 1));
         
-        drawFootballField.draw();
+        drawFootballField.drawEdges();
         
         verify(canvas).drawLine(new Point(0, 0), new Point(0, 1));
     }
@@ -59,8 +58,20 @@ public class DrawFootballFieldTest {
     public void doesntDrawDiagonalEdge() {
         initEdges(new Point(0, 0), new Point(1, 1));
         
-        drawFootballField.draw();
+        drawFootballField.drawEdges();
         
         verify(canvas, never()).drawLine(anyObject(), anyObject());
+    }
+    
+    @Test
+    public void drawsGoalNorth() throws Exception {
+        when(footballField.getGoalNorth()).thenReturn(new Point(1, 1));
+        
+        drawFootballField.drawGoalNorth();
+        
+        verify(canvas).drawLine(new Point(0, 1), new Point(1, 1));
+        verify(canvas).drawLine(new Point(2, 1), new Point(1, 1));
+        verify(canvas).drawLine(new Point(0, 0), new Point(0, 1));
+        verify(canvas).drawLine(new Point(2, 0), new Point(2, 1));
     }
 }
