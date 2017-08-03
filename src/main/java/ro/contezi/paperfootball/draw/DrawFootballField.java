@@ -30,4 +30,14 @@ public class DrawFootballField {
                         neighbor.getX().equals(edgePoint.getX()))
                 .forEach(neighbor -> canvas.drawLine(edgePoint, neighbor)));
     }
+
+    public void drawGoalSouth() {
+        Point goalSouth = field.getGoalSouth();
+        Point left = new Point(goalSouth.getX() - 1, goalSouth.getY());
+        Point right = new Point(goalSouth.getX() + 1, goalSouth.getY());
+        canvas.drawLine(left, goalSouth);
+        canvas.drawLine(right, goalSouth);
+        canvas.drawLine(new Point(left.getX(), left.getY() + 1), left);
+        canvas.drawLine(new Point(right.getX(), right.getY() + 1), right);
+    }
 }
