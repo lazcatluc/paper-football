@@ -2,6 +2,7 @@ package ro.contezi.paperfootball.input;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ public class FootballNodeExpandBestInputProvider implements UserInputProvider {
     
     private final int maxExpansions;
     private final Comparator<ExpandBest> bestChildFinder;
+    private ExpandBest currentNode;
 
     public FootballNodeExpandBestInputProvider(int maxExpansions) {
          this(maxExpansions, (eb1, eb2) -> Double.compare(eb2.getValue(), eb1.getValue()));
@@ -31,11 +33,13 @@ public class FootballNodeExpandBestInputProvider implements UserInputProvider {
     @Override
     public String getInput(String previousInput, FootballNode node) {
         LOGGER.debug("Expanding " + maxExpansions + " times.");
-        ExpandBest expandBest = new ExpandBest(node, bestChildFinder, 4);
-        IntStream.range(0, maxExpansions).forEach(i -> expandBest.expand());
-        double value = expandBest.getValue();
+        currentNode = Optional.ofNullable(currentNode)
+                .flatMap(bestNode -> bestNode.getGrandChild(node))
+                .orElseGet(() -> newExpandBest(node));
+        IntStream.range(0, maxExpansions).forEach(i -> currentNode.expand());
+        double value = currentNode.getValue();
         LOGGER.debug("Found value: " + value);
-        FootballNode bestChild = (FootballNode) expandBest.getChild();
+        FootballNode bestChild = (FootballNode) currentNode.getChild();
         List<SymmetricLine> pathToBestChild = bestChild.getPathLeadingToThisNode();
         String move = new Moves(node.getCurrentPosition()).fromList(pathToBestChild);
         LOGGER.debug("Found move: " + move);
@@ -47,4 +51,7 @@ public class FootballNodeExpandBestInputProvider implements UserInputProvider {
         LOGGER.error(ime.getMessage(), ime);
     }
 
+    protected ExpandBest newExpandBest(FootballNode node) {
+        return new ExpandBest(node, bestChildFinder, 4);
+    }
 }

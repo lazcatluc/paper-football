@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ro.contezi.paperfootball.FootballField;
@@ -12,14 +13,15 @@ import ro.contezi.paperfootball.Point;
 import ro.contezi.paperfootball.SymmetricLine;
 import ro.contezi.paperfootball.play.Play;
 
+@Ignore
 public class MatchTest {
     
     private static final Logger LOGGER = LogManager.getLogger(MatchTest.class);
     
     @Test
     public void makesMatch() {
-        FootballNodeABInputProvider north = new FootballNodeABInputProvider(2);
-        FootballNodeExpandBestInputProvider south = new FootballNodeExpandBestInputProvider(5, 
+        FootballNodeABInputProvider north = new FootballNodeABInputProvider(4);
+        FootballNodeExpandBestInputProvider south = new FootballNodeExpandBestInputProvider(4, 
                 (eb1, eb2) -> Double.compare(eb1.getValue(), eb2.getValue()));
         
         FootballNode footballNode = new FootballNode(new FootballField(), 
