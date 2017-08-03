@@ -8,6 +8,7 @@ import org.junit.Test;
 import ro.contezi.paperfootball.FootballNode;
 import ro.contezi.paperfootball.play.Play;
 
+@Ignore
 public class MatchTest {
     
     private static final Logger LOGGER = LogManager.getLogger(MatchTest.class);

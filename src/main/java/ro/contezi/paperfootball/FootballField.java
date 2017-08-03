@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class FootballField {
-    private static final int DEFAULT_HEIGHT = 10;
-    private static final int DEFAULT_WIDTH = 8;
+    public static final int DEFAULT_HEIGHT = 10;
+    public static final int DEFAULT_WIDTH = 8;
     
     private final Set<Point> goalNorth;
     private final Set<Point> goalSouth;
