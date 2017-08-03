@@ -7,7 +7,7 @@ import ro.contezi.paperfootball.input.IOInputProvider;
 public class Main {
 
     public static void main(String[] args) {
-        new Play(new FootballField(), new FootballNodeABInputProvider(2), 
+        new Play(new FootballField(), new FootballNodeABInputProvider(5), 
                 new IOInputProvider(System.in, System.out)).playToTheEnd();
     }
 

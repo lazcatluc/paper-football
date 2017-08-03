@@ -42,7 +42,7 @@ public class FootballNodeExpandBestInputProvider implements UserInputProvider {
         FootballNode bestChild = (FootballNode) currentNode.getChild();
         List<SymmetricLine> pathToBestChild = bestChild.getPathLeadingToThisNode();
         String move = new Moves(node.getCurrentPosition()).fromList(pathToBestChild);
-        LOGGER.debug("Found move: " + move);
+        LOGGER.info("Found move: " + move);
         return move;
     }
 
@@ -52,6 +52,6 @@ public class FootballNodeExpandBestInputProvider implements UserInputProvider {
     }
 
     protected ExpandBest newExpandBest(FootballNode node) {
-        return new ExpandBest(node, bestChildFinder, 4);
+        return new ExpandBest(node, bestChildFinder, maxExpansions);
     }
 }

@@ -29,7 +29,7 @@ public class FootballNodeABInputProvider implements UserInputProvider {
         FootballNode bestChild = (FootballNode) maximizingAlphaBeta.getChild();
         List<SymmetricLine> pathToBestChild = bestChild.getPathLeadingToThisNode();
         String move = new Moves(node.getCurrentPosition()).fromList(pathToBestChild);
-        LOGGER.debug("Found move: " + move);
+        LOGGER.info("Found move: " + move);
         return move;
     }
 

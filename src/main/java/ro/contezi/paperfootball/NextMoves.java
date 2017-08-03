@@ -30,11 +30,7 @@ public class NextMoves {
     }
     
     private Set<Point> immediateNeighbors(Point position) {
-        Set<Point> neighbors = new HashSet<>();
-        IntStream.range(-1, 2).forEach(x -> 
-            IntStream.range(-1, 2).forEach(y -> 
-                neighbors.add(new Point(position.getX() + x, position.getY() + y))));
-        neighbors.remove(position);
+        Set<Point> neighbors = position.getNeighbors();
         neighbors.removeIf(footballField::isOut);
         if (footballField.isEdge(position)) {
             neighbors.removeIf(footballField::isEdge);

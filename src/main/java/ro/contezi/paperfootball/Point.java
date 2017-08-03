@@ -1,6 +1,9 @@
 package ro.contezi.paperfootball;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 public class Point {
 
@@ -39,6 +42,15 @@ public class Point {
         return y;
     }
 
+    public Set<Point> getNeighbors() {
+        Set<Point> neighbors = new HashSet<>();
+        IntStream.range(-1, 2).forEach(x -> 
+            IntStream.range(-1, 2).forEach(y -> 
+                neighbors.add(new Point(this.getX() + x, this.getY() + y))));
+        neighbors.remove(this);
+        return neighbors;
+    }
+    
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
